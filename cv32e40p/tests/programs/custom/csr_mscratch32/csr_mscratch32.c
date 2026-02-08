@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 static inline void mscratch_write(uint32_t v)
 {
@@ -28,7 +29,8 @@ static int check(uint32_t pat, const char *name)
   uint32_t rd = mscratch_read();
 
   if (rd != pat) {
-    printf("FAIL: mscratch %s: wrote 0x%08x, read 0x%08x\n", name, pat, rd);
+    printf("FAIL: mscratch %s: wrote 0x%08" PRIx32 ", read 0x%08" PRIx32 "\n",
+		    name, pat, rd);
     return 1;
   }
   return 0;
@@ -107,7 +109,8 @@ int main(int argc, char *argv[])
     mscratch_write(pat);
     uint32_t rd = mscratch_read();
     if (rd != pat) {
-      printf("FAIL: walking1 bit %u: wrote 0x%08x, read 0x%08x\n", i, pat, rd);
+      printf("FAIL: walking1 bit %" PRIu32 " : wrote 0x%08" PRIx32
+		      ", read 0x%08" PRIx32 "\n", i, pat, rd);
       err = 1;
       break;
     }
@@ -119,7 +122,8 @@ int main(int argc, char *argv[])
     mscratch_write(pat);
     uint32_t rd = mscratch_read();
     if (rd != pat) {
-      printf("FAIL: walking0 bit %u: wrote 0x%08x, read 0x%08x\n", i, pat, rd);
+      printf("FAIL: walking0 bit %"PRIx32 " : wrote 0x%08" PRIx32 ", read 0x%08"
+		      PRIx32 "\n", i, pat, rd);
       err = 1;
       break;
     }
